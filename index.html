@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Аудит_IT_Q3_Q4_2025_финал_v4</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --bg-main: #020617;
+      --bg-card: #020617;
+      --border-subtle: rgba(148, 163, 184, 0.2);
+      --accent-1: #6366f1;
+      --accent-2: #22c55e;
+      --accent-3: #0ea5e9;
+      --accent-4: #f97316;
+      --accent-5: #ec4899;
+      --accent-6: #eab308;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --shadow-soft: 0 22px 45px rgba(15, 23, 42, 0.75);
+      --radius-xl: 22px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+      color: var(--text-main);
+    }
+    .page {
+      min-height: 100vh;
+      padding: 32px 20px 40px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .title-block { flex: 1 1 auto; }
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .title-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top left, #22c55e10, #6366f110);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+    }
+    .subtitle {
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 680px;
+    }
+    .badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--text-muted);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.92));
+      white-space: nowrap;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.7fr);
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 960px) {
+      .grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    .card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, #0b1220, #020617);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 16px;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0 0, rgba(99, 102, 241, 0.16), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(45, 212, 191, 0.12), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(59, 130, 246, 0.10), transparent 55%);
+      opacity: 0.85;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+    .card-inner { position: relative; z-index: 1; }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title span.icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0, #4ade80, #22c55e, #16a34a);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #022c22;
+      box-shadow: 0 0 0 1px rgba(22, 163, 74, 0.6), 0 0 24px rgba(74, 222, 128, 0.7);
+    }
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .card-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.96);
+    }
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .kpi {
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+    }
+    .kpi-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .kpi-value {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .kpi-caption {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .chart-wrapper {
+      position: relative;
+      height: 260px;
+    }
+    @media (max-width: 960px) {
+      .chart-wrapper { height: 240px; }
+    }
+    .chart-wrapper.centered {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .chart-wrapper.centered canvas {
+      width: 85% !important;
+      max-width: 720px;
+    }
+    .legend-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .legend-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+    th, td {
+      border: 1px solid rgba(30, 41, 59, 0.9);
+      padding: 6px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #020617;
+      color: var(--text-main);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.9);
+    }
+    tr:nth-child(odd) td {
+      background: rgba(15, 23, 42, 0.7);
+    }
+    a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    .footer-note {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      opacity: 0.9;
+    }
+    ul {
+      margin-top: 4px;
+      padding-left: 18px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="title-block">
+        <div class="title">
+          <span>Аудит IT — Q3 + Q4 2025</span>
+          <span class="title-pill">Audit · Q3–Q4 2025</span>
+        </div>
+        <div class="subtitle">
+          Период: 01.07.2025–31.12.2025. Итоговый обзор выполнения плана 2025 года, внеплановых активностей и операционной деятельности команды Airflow.
+        </div>
+      </div>
+      <div class="badge">
+        319 задач · план / внеплан / операционная деятельность
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">Σ</span>
+              Итоговая  статистика
+            </div>
+          </div>
+          <div class="card-subtitle">
+            Сводка по нагрузке команды за полугодие: общий объём задач, доля плана и внеплана, а также масштаб операционной деятельности.
+          </div>
+          <div class="card-meta">
+            <span class="pill">Всего задач за период: <strong>319</strong></span>
+            <span class="pill">Фильтр: создано / закрыто в Q3–Q4 2025</span>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-label">Всего задач</div>
+              <div class="kpi-value">319</div>
+              <div class="kpi-caption">100% объёма за полугодие</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">План 2025</div>
+              <div class="kpi-value">98</div>
+              <div class="kpi-caption">≈ 30.7% всех задач</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Внеплановые улучшения</div>
+              <div class="kpi-value">15</div>
+              <div class="kpi-caption">Улучшения систем сверх плана</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Кадровые задачи</div>
+              <div class="kpi-value">5</div>
+              <div class="kpi-caption">Подбор, обучение, орг. изменения</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Операционная деятельность</div>
+              <div class="kpi-value">201</div>
+              <div class="kpi-caption">Инциденты, текучка, аналитика</div>
+            </div>
+          </div>
+          <div class="footer-note">
+            Операционная деятельность включает все задачи без привязки к эпику (Plan_2025_2 пустой или 0): инциденты, регламентные работы, точечную аналитику и сопровождение.
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">π</span>
+              Распределение по категориям
+            </div>
+          </div>
+          <div class="card-subtitle">
+            Donut-график показывает, какую долю от общего объёма заняли плановые задачи, внеплановые инициативы, кадровые активности и операционка.
+          </div>
+          <div class="chart-wrapper" style="max-width: 380px; margin-top: 6px;">
+            <canvas id="donutTasks"></canvas>
+          </div>
+          <div class="legend-badges">
+            <span class="legend-badge">
+              <span class="legend-dot" style="background: var(--accent-1);"></span>
+              План
+            </span>
+            <span class="legend-badge">
+              <span class="legend-dot" style="background: var(--accent-4);"></span>
+              Внеплановые улучшения
+            </span>
+            <span class="legend-badge">
+              <span class="legend-dot" style="background: var(--accent-6);"></span>
+              Кадровые задачи
+            </span>
+            <span class="legend-badge">
+              <span class="legend-dot" style="background: var(--accent-2);"></span>
+              Операционная деятельность
+            </span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">Δ</span>
+              Загрузка разработчиков
+            </div>
+          </div>
+          <div class="card-subtitle">
+            Для каждого исполнителя считаем, в сколько рабочих дней в периоде (01.07–31.12.2025) у него была хотя бы одна активная задача.
+          </div>
+          <div class="card-meta">
+            <span class="pill">Всего исполнителей с задачами: <strong>9</strong></span>
+            <span class="pill">Ключевая команда (≥50% дней в Airflow): <strong>5</strong></span>
+            <span class="pill">Рабочие дни периода: <strong>132</strong></span>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi">
+              <div class="kpi-label">Максимальная загрузка</div>
+              <div class="kpi-value">132</div>
+              <div class="kpi-caption">Дней у самого загруженного исполнителя</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Средняя загрузка ядра</div>
+              <div class="kpi-value">100.0%</div>
+              <div class="kpi-caption">В среднем от 132 дней на человека</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Фактическая утилизация ядра</div>
+              <div class="kpi-value">100.0%</div>
+              <div class="kpi-caption">= Σ(занятых дней ядра) / (людей в ядре × 132)</div>
+            </div>
+          </div>
+          <div class="chart-wrapper" style="height: 200px; margin-top: 8px;">
+            <canvas id="coreUtilChart"></canvas>
+          </div>
+          <div class="footer-note">
+            Методика: задачи с несколькими исполнителями распределяются между ними. Для каждой задачи по каждому Assignee берём пересечение её интервала (Created At–Closed At) с периодом отчёта, превращаем его в множество рабочих дней (пн–пт) и считаем уникальные дни.
+            <br/>Ядро команды — исполнители (кроме «Без исполнителя»), у которых занято не менее половины рабочих дней периода. Утилизация ядра показывает, насколько плотно были заняты именно эти ключевые люди.
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">▤</span>
+              Топ-7 по загрузке рабочих дней
+            </div>
+          </div>
+          <div class="card-subtitle">
+            Горизонтальный барчарт показывает, сколько рабочих дней в периоде каждый из лидеров был занят задачами и сколько дней у него оставалось свободными.
+          </div>
+          <div class="chart-wrapper centered">
+            <canvas id="devLoadChart"></canvas>
+          </div>
+          <table>
+            <tr>
+              <th>ФИО</th>
+              <th>Занятые дни</th>
+              <th>Свободные дни</th>
+              <th>Утилизация, %</th>
+            </tr>
+            <tr>
+              <td>Масленников Денис</td>
+              <td>132</td>
+              <td>0</td>
+              <td>100.0</td>
+            </tr>
+            <tr>
+              <td>Миклин Артём</td>
+              <td>132</td>
+              <td>0</td>
+              <td>100.0</td>
+            </tr>
+            <tr>
+              <td>Тотоев Александр</td>
+              <td>132</td>
+              <td>0</td>
+              <td>100.0</td>
+            </tr>
+            <tr>
+              <td>Савинкин Илья</td>
+              <td>132</td>
+              <td>0</td>
+              <td>100.0</td>
+            </tr>
+            <tr>
+              <td>Ильина Марина</td>
+              <td>132</td>
+              <td>0</td>
+              <td>100.0</td>
+            </tr>
+            <tr>
+              <td>Ивашечкин Алексей</td>
+              <td>47</td>
+              <td>85</td>
+              <td>35.6</td>
+            </tr>
+            <tr>
+              <td>Дмитрий Шестаков</td>
+              <td>1</td>
+              <td>131</td>
+              <td>0.8</td>
+            </tr>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid" style="grid-template-columns: minmax(0,1fr);">
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">E</span>
+              Статистика по эпикам (план 2025)
+            </div>
+          </div>
+          <div class="card-subtitle">
+            В выборку входят только эпики плана 2025 года с номером &gt; 0, за исключением эпиков 1 и 4 (задачи по улучшению систем вне плана). Для каждого эпика показан объём задач и степень завершённости.
+          </div>
+          <table>
+            <tr>
+              <th>№ эпика</th>
+              <th>Наименование мероприятия</th>
+              <th>Всего задач</th>
+              <th>Закрыто</th>
+              <th>Открыто</th>
+              <th>% выполнения</th>
+            </tr>
+
+            <tr>
+              <td>2</td>
+              <td>Модернизация процессов обработки данных для эффективного проведения массовых расчетов.
+
+- Samplesheet_supplier должен переименовывать СШ без файлов
+- Перенос запуска дагов копирования результатов расчётов внутрь пайплайна драгенов
+- Реализовать возможность в samplesheet_supplier одновременной замены содержимого и переименования СШ
+- Удалить холостые запуски из логов и task_instances - РАЗОБРАТЬ НА ПОДЗАДАЧИ, КАК В ГИТЛАБЕ
+- Триггерить run_dragen из dragenX_vip_calculation - РАЗОБРАТЬ НА ПОДЗАДАЧИ ПРО БАЛАНСИРОВЩИК И ПР,
+</td>
+              <td>34</td>
+              <td>34</td>
+              <td>0</td>
+              <td>100.0%</td>
+            </tr>
+
+            <tr>
+              <td>3</td>
+              <td>Усовершенствование парсера и валидатора семплшитов
+
+- Создать таблицу samplesheet и запрограммировать её наполнение
+- Создать новый парсинг семплшитов для автоматики и валидатора.
+- Реализовать сохранение изменяемого содержимого samplesheets
+- Сохранять информацию о семплах из семплшита в соответствующей таблице в БД
+- Реализовать посемпловые расчёты на dragen</td>
+              <td>34</td>
+              <td>32</td>
+              <td>2</td>
+              <td>94.1%</td>
+            </tr>
+
+            <tr>
+              <td>5</td>
+              <td>Обеспечение консистентности данных и описание алгоритмов (bcl, fastq, dragen_res)
+
+- В ворнингах по недостающим fastq добавить номера образцов согласно сэмплшиту *
+- Задачи по описанию алгоритмов обработки данных
+- Заменить AirflowSkipException на AirflowException во многих местах дагов связанных с tape_rec</td>
+              <td>22</td>
+              <td>20</td>
+              <td>2</td>
+              <td>90.9%</td>
+            </tr>
+
+            <tr>
+              <td>5</td>
+              <td>Разработка автоматизации хранения результатов секвенирования MiSeq.</td>
+              <td>22</td>
+              <td>20</td>
+              <td>2</td>
+              <td>90.9%</td>
+            </tr>
+
+            <tr>
+              <td>6</td>
+              <td>Разработка автоматизации биоинформатической обработки лаборатории эпигенетических методов исследований</td>
+              <td>3</td>
+              <td>2</td>
+              <td>1</td>
+              <td>66.7%</td>
+            </tr>
+
+            <tr>
+              <td>6</td>
+              <td>Создать MVP инструмента просмотра содержимого базы seqlab.</td>
+              <td>3</td>
+              <td>2</td>
+              <td>1</td>
+              <td>66.7%</td>
+            </tr>
+
+            <tr>
+              <td>6</td>
+              <td>Добавление поиска данных в инструменте просмотра содержимого базы seqlab.
+
+- поиск местоположения ячеек и их семплов
+- поиск информации о результатах расчётов ячеек</td>
+              <td>3</td>
+              <td>2</td>
+              <td>1</td>
+              <td>66.7%</td>
+            </tr>
+
+            <tr>
+              <td>7</td>
+              <td>Обеспечение хранения данных от PacBio, Nanopore.
+
+- Финализировать с коллегами из Лаборатории Биобанкирования и Мультиомиксных Методов Исследований локацию хранения данных с секвенатора Oxford Nanopore.
+- Автоматизировать копирование данных PacBio с uvd в ceph.</td>
+              <td>5</td>
+              <td>5</td>
+              <td>0</td>
+              <td>100.0%</td>
+            </tr>
+
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid" style="grid-template-columns: minmax(0,1fr);">
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">T</span>
+              Top-20 самых долгих задач
+            </div>
+          </div>
+          <div class="card-subtitle">
+            Длительность считается как разница между датой закрытия и датой создания задачи (Closed At − Created At, в днях). Это задачи, которые дольше всего висели в работе или ожидании.
+          </div>
+          <table>
+            <tr>
+              <th>Заголовок</th>
+              <th>Длительность, дней</th>
+              <th>Статус</th>
+              <th>Plan_2025_2</th>
+              <th>Категория</th>
+              <th>URL</th>
+            </tr>
+
+            <tr>
+              <td>samplesheet_supplier должен переименовывать СШ без файлов и проверять консистентность rename_samplesheet и имён СШ</td>
+              <td>371.3</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1835" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Отладить запуск удаления из таск-инстансов Airflow дагранов/тасков</td>
+              <td>351.8</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1913" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>При падении дага копирования от rsync может оставаться мусор. Это проблема</td>
+              <td>342.7</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1917" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>transfer_data - продумать логгирование, чтобы в лог airflow не падал полный лог rsync-a</td>
+              <td>333.0</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1889" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Написать DAG удаления холостых дагранов</td>
+              <td>323.8</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1915" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Реализовать сохранение изменяемого содержимого samplesheets</td>
+              <td>305.2</td>
+              <td>Closed</td>
+              <td>3</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1936" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Перенос запуска дагов копирования результатов расчётов внутрь пайплайна драгенов</td>
+              <td>302.2</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1858" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Поменять формат письма о результате копирования fastq в ceph</td>
+              <td>272.1</td>
+              <td>Closed</td>
+              <td></td>
+              <td>operational</td>
+              <td><a href="https://gitlab.cspfmba.ru/volk/airflow/-/issues/2182" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Реализовать возможность в samplesheet_supplier одновременной замены содержимого и переименования СШ</td>
+              <td>265.8</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1927" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Уменьшить объём логгирования в copy_airflow_logs_to_ceph</td>
+              <td>253.2</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1973" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Составить список холостых дагранов</td>
+              <td>250.5</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1914" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>run_dragen шедулится ежеминутно. Надо его триггерить из dragenX_vip_calculation</td>
+              <td>245.1</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1902" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Формирование fastq из сэмплшита</td>
+              <td>243.9</td>
+              <td>Closed</td>
+              <td>5</td>
+              <td>plan</td>
+              <td><a href="https://gitlab.cspfmba.ru/volk/airflow/-/issues/2063" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Сделать DAG проверки соответствия sequencing_type имени семплшита</td>
+              <td>228.7</td>
+              <td>Closed</td>
+              <td>5</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1951" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Создать DAG для нахождения рассинхрона семплшитов</td>
+              <td>218.0</td>
+              <td>Closed</td>
+              <td>5</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1945" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Определиться, какие DAG- и имеет смысл поставить на паузу</td>
+              <td>199.1</td>
+              <td>Closed</td>
+              <td>2</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/1939" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Влияние на статус запуска копирования FASTQ в статусе DEMULTIPLEXING_QC_FAILED</td>
+              <td>197.5</td>
+              <td>Closed</td>
+              <td></td>
+              <td>operational</td>
+              <td><a href="https://gitlab.cspfmba.ru/volk/airflow/-/issues/2251" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Написать запрос для мониторинга наличия достаточного количества копий bcl</td>
+              <td>196.1</td>
+              <td>Closed</td>
+              <td>5</td>
+              <td>plan</td>
+              <td><a href="https://gitlab.cspfmba.ru/volk/airflow/-/issues/2245" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Изменение в механизме приостановки расчётов на dragen для vip calculation</td>
+              <td>173.2</td>
+              <td>Closed</td>
+              <td></td>
+              <td>operational</td>
+              <td><a href="https://gitlab.cspfmba.ru/volk/airflow/-/issues/2222" target="_blank">ссылка</a></td>
+            </tr>
+
+            <tr>
+              <td>Рефакторинг схем для приведения к единообразной схеме инфраструктуры</td>
+              <td>156.4</td>
+              <td>Closed</td>
+              <td>5</td>
+              <td>plan</td>
+              <td><a href="https://gitlab-omg.pak-cspmz.ru/it/dev/airflow/-/issues/2011" target="_blank">ссылка</a></td>
+            </tr>
+
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid" style="grid-template-columns: minmax(0,1fr);">
+      <article class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">
+              <span class="icon">✓</span>
+              Краткие выводы
+            </div>
+          </div>
+          <ul>
+            <li>За период Q3–Q4 2025 года команда обработала <strong>319</strong> задач в контуре Airflow, включая плановые инициативы, внеплановые улучшения и операционное сопровождение.</li>
+            <li>План 2025 года дал <strong>98</strong> задач (&asymp; <strong>30.7%</strong> общего объёма), при этом средний уровень выполнения по эпикам  составляет около <strong>92.9%</strong>.</li>
+            <li>Внеплановые улучшения систем и кадровые задачи суммарно составили <strong>20</strong> задач, отражая объём изменений, которые приходилось реализовывать поверх согласованного плана.</li>
+            <li>Основная нагрузка пришлась на операционную деятельность — <strong>201</strong> задач (около <strong>63.0%</strong>), что включает инциденты, регламентные работы и точечную аналитику.</li>
+            <li>По оценке загрузки по колонке Assignee ключевая команда (исполнители, занятые не менее половины рабочих дней периода) отработала с утилизацией порядка <strong>100.0%</strong> при средней загрузке <strong>100.0%</strong> от 132 рабочих дней.</li>
+            <li>Top-20 самых долгих задач и топ-7 по загрузке исполнителей &mdash; хорошая база для точечного разбора: где именно накапливаются технические долги и какие части операционного контура требуют оптимизации.</li>
+            <li>Отдельно стоит отметить загрузку Ивашечкина Алексея. Согласно данным по задачам за период, у него наблюдается заметное количество свободных рабочих дней. Это связано не с низкой активностью, а со спецификой роли: Алексей является сотрудником лаборатории, и его участие требуется точечно — в формате предоставления ответов и консультаций по отдельным вопросам. Поэтому его задачи имеют эпизодический характер, что корректно отражается в метриках утилизации.</li>
+          </ul>
+
+        </div>
+      </article>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const donutCtx = document.getElementById("donutTasks").getContext("2d");
+        const donutData = [98, 15, 5, 201];
+        const donutLabels = ['План', 'Внеплановые улучшения', 'Кадровые задачи', 'Операционная деятельность'];
+        const donutColors = [
+          "rgba(99, 102, 241, 0.9)",
+          "rgba(249, 115, 22, 0.9)",
+          "rgba(234, 179, 8, 0.9)",
+          "rgba(34, 197, 94, 0.9)"
+        ];
+        new Chart(donutCtx, {
+          type: "doughnut",
+          data: {
+            labels: donutLabels,
+            datasets: [{
+              data: donutData,
+              backgroundColor: donutColors,
+              borderColor: "rgba(15, 23, 42, 1)",
+              borderWidth: 2,
+              hoverOffset: 4
+            }]
+          },
+          options: {
+            layout: {
+              padding: { left: 24, right: 8, top: 8, bottom: 8 }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                backgroundColor: "rgba(15, 23, 42, 0.98)",
+                borderColor: "rgba(148, 163, 184, 0.7)",
+                borderWidth: 1,
+                padding: 10,
+                titleFont: { family: "Inter", size: 12, weight: "600" },
+                bodyFont: { family: "Inter", size: 11 },
+                callbacks: {
+                  label: (ctx) => {
+                    const label = ctx.label || "";
+                    const value = ctx.parsed;
+                    const total = donutData.reduce((a, b) => a + b, 0);
+                    const perc = total ? (value / total * 100).toFixed(1) : 0;
+                    return `${label}: ${value} задач (${perc}%)`;
+                  }
+                }
+              }
+            },
+            cutout: "62%",
+            animation: { duration: 900, easing: "easeOutCubic" }
+          }
+        });
+
+
+        const coreCtx = document.getElementById("coreUtilChart").getContext("2d");
+        const coreLabels = ['Масленников', 'Миклин', 'Тотоев', 'Савинкин', 'Ильина'];
+        const coreData = [132, 132, 132, 132, 132];
+        new Chart(coreCtx, {
+          type: "doughnut",
+          data: {
+            labels: coreLabels,
+            datasets: [{
+              data: coreData,
+              backgroundColor: [
+                "rgba(59, 130, 246, 0.95)",
+                "rgba(34, 197, 94, 0.95)",
+                "rgba(234, 179, 8, 0.95)",
+                "rgba(244, 114, 182, 0.95)",
+                "rgba(56, 189, 248, 0.95)"
+              ],
+              borderColor: "rgba(15, 23, 42, 1)",
+              borderWidth: 2,
+              hoverOffset: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "bottom",
+                labels: {
+                  color: "#e5e7eb",
+                  font: { family: "Inter", size: 10 }
+                }
+              },
+              tooltip: {
+                backgroundColor: "rgba(15, 23, 42, 0.98)",
+                borderColor: "rgba(148, 163, 184, 0.7)",
+                borderWidth: 1,
+                padding: 8,
+                titleFont: { family: "Inter", size: 11, weight: "600" },
+                bodyFont: { family: "Inter", size: 10 },
+                callbacks: {
+                  label: (ctx) => {
+                    const label = ctx.label || "";
+                    const value = ctx.parsed;
+                    return `${label}: ${value} занятых дней`;
+                  }
+                }
+              }
+            },
+            cutout: "60%"
+          }
+        });
+
+        const devCtx = document.getElementById("devLoadChart").getContext("2d");
+        const devLabels = ['Масленников', 'Миклин', 'Тотоев', 'Савинкин', 'Ильина', 'Ивашечкин', 'Шестаков'];
+        const devBusy = [132, 132, 132, 132, 132, 47, 1];
+        const devFree = [0, 0, 0, 0, 0, 85, 131];
+        new Chart(devCtx, {
+          type: "bar",
+          data: {
+            labels: devLabels,
+            datasets: [
+              {
+                label: "Занятые дни",
+                data: devBusy,
+                backgroundColor: "rgba(59, 130, 246, 0.9)"
+              },
+              {
+                label: "Свободные дни",
+                data: devFree,
+                backgroundColor: "rgba(148, 163, 184, 0.6)"
+              }
+            ]
+          },
+          options: {
+            layout: {
+              padding: { left: 120, right: 12, top: 12, bottom: 12 }
+            },
+            indexAxis: "y",
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                max: 132,
+                grid: {
+                  color: "rgba(31, 41, 55, 0.8)"
+                },
+                ticks: {
+                  color: "#9ca3af",
+                  font: { family: "Inter", size: 11 }
+                }
+              },
+              y: {
+                grid: {
+                  display: false
+                },
+                ticks: {
+                  color: "#e5e7eb",
+                  font: { family: "Inter", size: 11 }
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                labels: {
+                  color: "#e5e7eb",
+                  font: { family: "Inter", size: 11 }
+                }
+              },
+              tooltip: {
+                backgroundColor: "rgba(15, 23, 42, 0.98)",
+                borderColor: "rgba(148, 163, 184, 0.7)",
+                borderWidth: 1,
+                padding: 10,
+                titleFont: { family: "Inter", size: 12, weight: "600" },
+                bodyFont: { family: "Inter", size: 11 },
+                callbacks: {
+                  label: (ctx) => {
+                    const label = ctx.dataset.label || "";
+                    const value = ctx.parsed.x;
+                    return `${label}: ${value} рабочих дней`;
+                  }
+                }
+              }
+            }
+          }
+        });
+      });
+    </script>
+
+  </div>
+</body>
+</html>
